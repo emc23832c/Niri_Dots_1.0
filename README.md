@@ -26,4 +26,5 @@ Mis dotfiles utilizan y hacen referencia a los siguientes proyectos de código a
 
 * [pyfracgen](https://github.com) (Ryther Anderson) - Usado en scripts de Python para generación de arte fractal.
 * [waybar-niri-workspaces-enhanced](https://github.com/justbuchanan/waybar-niri-workspaces-enhanced) (JustBuchanan) - Módulo mejorado de espacios de trabajo para Waybar en el compositor Niri.
-
+* Claude - used for help where i can't do it
+* Qwen - used for help where i can't do it
