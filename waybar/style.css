@@ -1,0 +1,125 @@
+/* =========================================================================
+   Tema personalizado para waybar-niri-workspaces-enhanced
+   - Pestañas (workspaces): fondo azul oscuro, símbolos/letras 100% en aqua
+     (sin blanco), resaltado aqua al enfocar/hover
+   - Indicadores (hora, batería, volumen, brillo, temperatura, apagar):
+     verde aqua estilo Hyprland
+   - Tamaños ajustados para una barra de 44px de alto
+   ========================================================================= */
+
+@define-color bg-dark-blue         #0e1a2b;  /* fondo base de toda la barra */
+@define-color text-white           #ffffff;  /* solo se usa fuera de pestañas (tooltips, brillo del logo, etc.) */
+@define-color accent-aqua          #1de9b6;  /* verde aqua estilo Hyprland */
+@define-color accent-danger        #ff5555;
+@define-color accent-warning       #f1c21b;
+
+* {
+  /* Si usas Font Awesome en lugar de Nerd Font, cambia esta fuente.
+     Debe coincidir EXACTO con el nombre que reporte "fc-list" */
+  font-family: "Hack Nerd Font Propo";
+  font-size: 16px;  /* subido de 14 a 16, la barra ahora es más alta (48px) */
+  color: @text-white;
+}
+
+window#waybar {
+  background: @bg-dark-blue;
+  /* Línea de ~2px justo debajo de toda la waybar */
+  border-bottom: 2px solid @accent-aqua;
+}
+
+/* ---------------- Pestañas (workspaces): azul oscuro, todo en aqua, sin blanco ---------------- */
+
+#workspaces {
+  background: @bg-dark-blue;
+  padding: 0 4px;
+}
+
+#workspaces button {
+  padding: 0 10px;
+  color: @accent-aqua;
+  background: @bg-dark-blue;
+  border-bottom: 3px solid transparent;
+  border-radius: 4px;
+  margin: 4px 2px;
+  letter-spacing: 0.5px;
+  transition: background 0.15s ease-in-out;
+}
+
+#workspaces button:hover {
+  background: alpha(@accent-aqua, 0.12);
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+  background: alpha(@accent-aqua, 0.20);
+  color: @accent-aqua;
+  border-bottom: 3px solid @accent-aqua;
+}
+
+#workspaces button.urgent {
+  background: @accent-danger;
+}
+
+/* ---------------- Logo de Arch/NixOS: símbolo directo, clickeable (abre fuzzel) ---------------- */
+
+#custom-arch {
+  color: @accent-aqua;
+  font-size: 28px;
+  padding: 0 10px;
+}
+
+/* Al pasar el cursor: se ilumina en blanco */
+#custom-arch:hover,
+#custom-arch:active {
+  color: @text-white;
+  text-shadow: 0 0 8px alpha(@text-white, 0.85);
+}
+
+/* ---------------- Indicadores: hora, batería, volumen, brillo, temperatura, apagar ---------------- */
+
+#clock,
+#battery,
+#pulseaudio,
+#backlight,
+#temperature,
+#custom-power {
+  color: @accent-aqua;
+  background: @bg-dark-blue;
+  padding: 0 10px;
+  margin: 4px 2px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+#battery.warning:not(.charging) {
+  color: @accent-warning;
+}
+
+#battery.critical:not(.charging) {
+  color: @accent-danger;
+}
+
+#temperature.critical {
+  color: @accent-danger;
+}
+
+#pulseaudio.muted {
+  color: alpha(@accent-aqua, 0.5);
+}
+
+/* El botón de apagar se pone rojo al pasar el cursor, como aviso */
+#custom-power:hover {
+  color: @text-white;
+  background: @accent-danger;
+}
+
+tooltip {
+  background: @bg-dark-blue;
+  color: @text-white;
+  border: 1px solid alpha(@accent-aqua, 0.4);
+  border-radius: 6px;
+}
+
+tooltip label {
+  color: @text-white;
+}

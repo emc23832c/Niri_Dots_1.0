@@ -1,0 +1,149 @@
+[
+  {
+    "layer": "top",
+    "position": "top",
+    "height": 44,
+    "spacing": 6,
+
+    "modules-left": ["cffi/niri-workspaces-enhanced"],
+    "modules-center": ["custom/arch"],
+    // Punto 2 de tu lista: hora, batería, volumen, brillo y temperatura.
+    // Se pintan en verde aqua desde style.css.
+    "modules-right": ["temperature", "backlight", "pulseaudio", "battery", "clock", "custom/power"],
+
+    "cffi/niri-workspaces-enhanced": {
+      // IMPORTANTE: waybar usa dlopen() para cargar esto, y dlopen NO expande "~".
+      // Tiene que ser una ruta ABSOLUTA literal. Corre en tu terminal:
+      //   echo "$HOME/.config/waybar/niri-workspaces-enhanced.so"
+      // y pega ese resultado exacto abajo (reemplaza TU_USUARIO).
+      "module_path": "/home/astro/.config/waybar/niri-workspaces-enhanced.so",
+
+      // Placeholders disponibles para "format":
+      //   {index}          - número del workspace
+      //   {name}           - nombre del workspace (puede ir vacío)
+      //   {index-and-name} - índice + nombre si existe (ej. "1 Work")
+      //   {value}          - nombre si existe, si no el índice
+      //   {separator}      - ": " si hay iconos, "" si no
+      //   {window-icons}   - iconos de las ventanas del workspace
+      "format": "{index-and-name}{separator} {window-icons}",
+
+      // Solo mostrar workspaces de una salida (monitor) concreta.
+      // Útil en setups multi-monitor; deja comentado si tienes un solo monitor.
+      // "output": "HDMI-A-1",
+
+      // --- Punto 1 de tu lista: azul oscuro de fondo (en style.css) + letra
+      // aqua aquí en los símbolos (ya no queda blanco en las pestañas). La
+      // negrita, y las urgentes en rojo para que resalten sobre el azul oscuro.
+      "window-icon-format": {
+        "default": "<span foreground='#1de9b6'>{icon}</span>",
+        "urgent": "<span foreground='#ff5555'><b>{icon}</b></span>",
+        "focused": "<span foreground='#1de9b6'><b>{icon}</b></span>",
+      },
+
+      // --- Punto 3 de tu lista: iconos claros y reconocibles por app.
+      // El match es insensible a mayúsculas/minúsculas.
+      "window-icons": {
+        // --- Originales del repo ---
+        "com.mitchellh.ghostty": "󰆍",   // terminal (ghostty)
+        "foot": "󰆍",                    // terminal (foot)
+        "darktable": "",                  // editor de fotos
+        "google-chrome": "",              // navegador Chrome
+        "firefox": "",                   // navegador Firefox
+        "spotify": "󰓇",                   // música
+        "steam": "",                       // juegos
+
+        // --- Agregados que ya funcionan ---
+        "brave-browser": "",              // Brave
+        "org-geogebra-desktop-GeoGebra3D": "", // GeoGebra
+        "spyder": "󰌠",                       // Spyder (IDE)
+        "thunar": "",                // Thunar (gestor de archivos)
+        "alacritty": "󰆍",                // Alacritty (terminal)
+        "kitty": "󰆍",                    // kitty (terminal)
+        "org.pwmt.zathura": "",       // Zathura (lector PDF)
+        "zen": "",                          // Zen Browser
+
+        // --- Confirmados con "niri msg windows" ---
+        "libreoffice-writer": "",  // LibreOffice Writer
+        "libreoffice-calc": "",       // LibreOffice Calc -- confírmame el app_id si lo usas
+        "libreoffice-impress": "",    // LibreOffice Impress -- confírmame el app_id si lo usas
+        "sol": "",                         // Aisleriot/Sol (solitario, confirmado con niri msg windows)
+        "md.obsidian.Obsidian": "",       // Obsidian
+	"qalculate-gtk" :"",
+
+        // --- Comentados a propósito, tal como pediste ---
+        // "mathematica": "",           // Wolfram Mathematica
+        // "octave": "",                  // GNU Octave
+
+        // --- Ejemplos comentados: actívalos y ajusta el app_id si los usas ---
+        // "rviz": "",                      // ROS (rviz) -- cambia el app_id según qué herramienta de ROS uses
+        // "code": "",                      // Visual Studio Code
+      },
+
+      // Icono para cualquier app sin coincidencia en la lista de arriba
+      "window-icon-default": "*",
+    },
+
+    // ------------------- Módulos nuevos (punto 2) -------------------
+
+    "clock": {
+      "format": "{:%H:%M}",
+      "format-alt": "{:%A, %d %B}",
+      "tooltip-format": "{:%A, %d de %B de %Y}",
+    },
+
+    "battery": {
+      "states": {
+        "warning": 30,
+        "critical": 15,
+      },
+      "format": "{icon}  {capacity}%",
+      "format-charging": "  {capacity}%",
+      "format-plugged": "  {capacity}%",
+      "format-icons": ["", "", "", "", ""],
+      "tooltip-format": "{time} restante ({capacity}%)",
+    },
+
+    "pulseaudio": {
+      "format": "{icon}  {volume}%",
+      "format-muted": "  Silencio",
+      "format-icons": {
+        "default": ["", "", ""],
+      },
+      "on-click": "pavucontrol",
+      "scroll-step": 5,
+    },
+
+    "backlight": {
+      // Si no detecta tu pantalla, revisa "ls /sys/class/backlight/" y añade:
+      // "device": "intel_backlight",
+      "format": "  {percent}%",
+      "on-scroll-up": "brightnessctl set 5%+",
+      "on-scroll-down": "brightnessctl set 5%-",
+    },
+
+    "temperature": {
+      // En algunos equipos hay que fijar el sensor a mano, ejemplo:
+      // "thermal-zone": 0,
+      // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+      "critical-threshold": 80,
+      "format": "{icon}  {temperatureC}°C",
+      "format-icons": ["", "", "", "", ""],
+    },
+
+    // Logo de Arch Linux al centro de la barra.
+    // Para cambiarlo por NixOS, reemplaza el valor de "format" por: ""
+    "custom/arch": {
+      "format": "",
+      "tooltip": false,
+      "on-click": "rofi -show drun",
+    },
+    // Botón de apagado. Un solo click apaga el equipo -- lee la explicación
+    // sobre permisos de polkit/logind para que funcione sin pedir contraseña.
+    "custom/power": {
+      "format": "",
+      "tooltip": true,
+      "tooltip-format": "Click para apagar el equipo",
+      "on-click": "systemctl poweroff",
+    },
+  },
+]

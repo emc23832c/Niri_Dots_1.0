@@ -1,0 +1,25 @@
+* {
+  /* Paleta adaptada para que rofi combine con la waybar:
+     mismo azul oscuro de fondo, mismo verde aqua de acento,
+     mismo rojo para "urgente" y amarillo para "warning". */
+
+  bg0     : #0e1a2b;  /* fondo principal -- igual al de la waybar */
+  bg1     : #16304a;  /* fondo de la barra de búsqueda */
+  bg2     : #1f3b5c;  /* fondo de elementos seleccionados / mensajes */
+
+  fg0     : #ffffff;  /* texto principal */
+  fg1     : #c7d6e0;  /* texto secundario */
+  fg2     : #8fa3b8;  /* texto atenuado */
+
+  red     : #ff5555;  /* mismo rojo que usa la waybar para "urgente" */
+  green   : #9ece6a;  /* sin uso en config.rasi, se deja igual */
+  yellow  : #f1c21b;  /* mismo amarillo que usa la waybar para "warning" de batería */
+  blue    : #4d7ea8;  /* azul medio, distinto del aqua de acento */
+  magenta : #9a7ecc;  /* sin uso en config.rasi, se deja igual */
+  cyan    : #4a9c8a;  /* aqua atenuado, para el texto de placeholder */
+  aqua    : #1de9b6;  /* el mismo verde aqua de acento de la waybar */
+
+  bg3     : @aqua;    /* usado como color de borde -- así queda el borde aqua alrededor de rofi */
+  accent  : @aqua;    /* elementos activos, igual que las pestañas enfocadas en la waybar */
+  urgent  : @red;     /* elementos urgentes, igual que las pestañas urgentes en la waybar */
+}
